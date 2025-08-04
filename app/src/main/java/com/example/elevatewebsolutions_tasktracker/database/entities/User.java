@@ -15,11 +15,13 @@ public class User {
     private String username;
     private String password;
     private String title;
+    private boolean isAdmin;
 
     public User(String username, String password, String title) {
         this.username = username;
         this.password = password;
         this.title = title;
+        isAdmin = false;
     }
 
     public int getId() {
@@ -54,15 +56,23 @@ public class User {
         this.title = title;
     }
 
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(title, user.title);
+        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(title, user.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, title);
+        return Objects.hash(id, username, password, title, isAdmin);
     }
 }

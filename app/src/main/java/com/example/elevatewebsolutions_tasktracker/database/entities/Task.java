@@ -1,6 +1,6 @@
 package com.example.elevatewebsolutions_tasktracker.database.entities;
 
-public class TaskManager {
+public class Task {
 
-    //TODO:TaskManager entity
+    //TODO:Task entity
 }
