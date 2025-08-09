@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 // import com.example.elevatewebsolutions_tasktracker.database.entities.Comment;
 
 // TODO: Add Comment entity when implemented
-@Database(entities = {User.class, Task.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Task.class}, version = 2, exportSchema = false)
 public abstract class TaskManagerDatabase extends RoomDatabase {
 
     // Table names
@@ -54,10 +54,10 @@ public abstract class TaskManagerDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(
                             context.getApplicationContext(),
                             TaskManagerDatabase.class,
-                            DATABASE_NAME
-                    )
-                    .fallbackToDestructiveMigration()
-                    .build();
+                            DATABASE_NAME)
+                            .fallbackToDestructiveMigration()
+                            .addCallback(addDefaultValues)
+                            .build();
                 }
             }
         }
@@ -75,6 +75,7 @@ public abstract class TaskManagerDatabase extends RoomDatabase {
             Log.i(MainActivity.TAG, "Database CREATED!");
             databaseWriteExecutor.execute(() -> {
                 UserDAO dao = INSTANCE.userDAO();
+                TaskDAO taskDao = INSTANCE.taskDAO();
                 dao.deleteAll();
                 User admin = new User("admin1", "admin1", "admin");
                 admin.setAdmin(true);
