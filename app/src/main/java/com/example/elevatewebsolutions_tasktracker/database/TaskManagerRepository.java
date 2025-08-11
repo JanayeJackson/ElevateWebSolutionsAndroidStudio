@@ -26,7 +26,7 @@ public class TaskManagerRepository {
     /**
      * Creates single instance of Database that can be used to update database ensuring
      * there are no conflicts or collisions.
-     * @param application
+     * @param application Application context to access the database
      */
     private TaskManagerRepository(Application application) {
         TaskManagerDatabase db = TaskManagerDatabase.getDatabase(application);
@@ -39,7 +39,7 @@ public class TaskManagerRepository {
      * Checks to see if there is an active repository, if so returns that repository
      * Else waits for an instance of the repository to be created using the databseWriteExecutor
      * Uses try and catch to attempt to return created repository, if error occurs exception is thrown
-     * @param application
+     * @param application Application context to access the database
      * @return instance of repository
      */
     public static TaskManagerRepository getRepository(Application application){
@@ -72,7 +72,7 @@ public class TaskManagerRepository {
 
     /**
      * Inserts a task into the task database
-     * @param task
+     * @param task task object to be inserted
      */
     public void insertTask(Task task) {
         TaskManagerDatabase.databaseWriteExecutor.execute(() -> {
@@ -82,7 +82,7 @@ public class TaskManagerRepository {
 
     /**
      * Inserts a user into the user database
-     * @param user
+     * @param user user object to be inserted
      */
     public void insertUser(User... user) {
         TaskManagerDatabase.databaseWriteExecutor.execute(() -> {
@@ -92,7 +92,7 @@ public class TaskManagerRepository {
 
     /**
      * Gets user properties using username
-     * @param username
+     * @param username username of the user
      * @return a LiveData object of a User
      */
     public LiveData<User> getUserByUserName(String username) {
@@ -101,7 +101,7 @@ public class TaskManagerRepository {
 
     /**
      * Gets user properties using user ID
-     * @param id
+     * @param id ID of the user
      * @return a LiveData object of a User
      */
     public LiveData<User> getUserByUserId(int id) {
@@ -110,7 +110,7 @@ public class TaskManagerRepository {
 
     /**
      * Gets a list of tasks by the ID of the user that is loggedIn
-     * @param loggedInUserId
+     * @param loggedInUserId current user ID
      * @return a LivedData object of all tasks associated with current user
      */
     public LiveData<List<Task>>getAllTasksByUserId(int loggedInUserId){

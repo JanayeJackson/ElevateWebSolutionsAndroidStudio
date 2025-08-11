@@ -7,4 +7,5 @@
     <string name="preference_userid_key">linkPreferenceUserIdKeyTask</string>
     <string name="task_holder">Select a Task</string>
     <string name="tasktracker_login">TaskTracker Login</string>
+    <string name="add_a_task">Add a Task</string>
 </resources>

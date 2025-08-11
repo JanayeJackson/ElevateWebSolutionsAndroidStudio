@@ -29,4 +29,14 @@
         app:layout_constraintTop_toBottomOf="@id/taskDisplayTextView"
         />
 
+    <Button
+        android:id="@+id/addTaskButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/add_a_task"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
