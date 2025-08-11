@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         updateSharedPreference();
 
         binding.taskDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
-        createTableRows();
 
         //Insert test tasks for demonstration purposes
         //Task testTask = new Task("Test Task", "This is a test task description.", "open", loggedInUser);
@@ -81,7 +80,18 @@ public class MainActivity extends AppCompatActivity {
     private void createTableRows() {
         table = binding.taskDisplayTableLayout;
         table.removeAllViews();
-        repository.getAllTasksByUserId(loggedInUser).observe(this, tasks -> {
+        if(user.getAdmin() == true){
+            repository.getAllTasks().removeObservers(this);
+            repository.getAllTasks().observe(this, this::handleTasks);
+        }else {
+            repository.getAllTasksByUserId(loggedInUser).removeObservers(this);
+            repository.getAllTasksByUserId(loggedInUser).observe(this, this::handleTasks);
+        }
+    }
+
+    private void handleTasks(List<Task> tasks) {
+        table = binding.taskDisplayTableLayout;
+        table.removeAllViews();
             if (tasks != null && !tasks.isEmpty()) {
                 TableRow headerRow = getHeaderRow();
                 table.addView(headerRow);
@@ -94,12 +104,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 binding.taskDisplayTextView.setText("No tasks available.");
             }
-        });
-
-
-
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     private TableRow getHeaderRow() {
         TableRow headerRow = new TableRow(this);
@@ -201,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
             this.user = user;
             if(user != null){
                 invalidateOptionsMenu();
+                createTableRows();
             }else{
                 logout();
             }
