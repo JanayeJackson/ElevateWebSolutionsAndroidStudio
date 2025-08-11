@@ -116,4 +116,10 @@ public class TaskManagerRepository {
     public LiveData<List<Task>>getAllTasksByUserId(int loggedInUserId){
         return taskDAO.getTasksByUserId(loggedInUserId);
     }
+
+    public void deleteTask(Task task) {
+        TaskManagerDatabase.databaseWriteExecutor.execute(() -> {
+            taskDAO.delete(task);
+        });
+    }
 }

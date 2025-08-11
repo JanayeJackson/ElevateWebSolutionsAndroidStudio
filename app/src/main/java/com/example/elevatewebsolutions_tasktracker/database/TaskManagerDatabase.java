@@ -77,11 +77,14 @@ public abstract class TaskManagerDatabase extends RoomDatabase {
                 UserDAO dao = INSTANCE.userDAO();
                 TaskDAO taskDao = INSTANCE.taskDAO();
                 dao.deleteAll();
+                taskDao.deleteAllTasks();
                 User admin = new User("admin1", "admin1", "admin");
                 admin.setAdmin(true);
                 dao.insert(admin);
                 User testuser1 = new User("testuser1", "testuser1", "user");
                 dao.insert(testuser1);
+                Task testTask = new Task("Test Task 1", "This is a test task", "Open", testuser1.getId());
+                taskDao.insert(testTask);
                 //TODO: add test tasks
             });
         }
